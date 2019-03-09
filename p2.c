@@ -3,9 +3,9 @@
 //FUNCTION PROTOTYPES
 void PrintChessboard(char[8][8]);
 void CheckRook(int*, int, int, char[8][8]);
-void CheckKnight(int*, int, int, char[8][8]);
+int CheckKnight(int, int, char[8][8]);
 void CheckQueen(int*, int, int, char[8][8]);
-void CheckKing(int*, int, int, char[8][8]);
+int CheckKing(int, int, char[8][8]);
 void CheckBishop(int*, int, int, char[8][8]);
 int CheckPawn(int, int, char[8][8]);
 
@@ -49,7 +49,7 @@ int main()
             //CHECKS IF THE PIECE AT THIS LOCATION IS A WHITE KNIGHT
             if(chessBoard[i][j] == 'N')
             {
-                CheckKnight(&numberOfChecks,i,j,chessBoard);
+                numberOfChecks += CheckKnight(i,j,chessBoard);
             }
 
             //CHECKS IF THE PIECE AT THIS LOCATION IS A WHITE QUEEN
@@ -79,7 +79,7 @@ int main()
             //CHECKS IF THE PIECE AT THIS LOCATION IS A WHITE KING
             else if(chessBoard[i][j] == 'K')
             {
-                CheckKing(&numberOfChecks,i,j,chessBoard);
+                numberOfChecks += CheckKing(i,j,chessBoard);
             }
 
             //CHECKS IF THE PIECE AT THIS LOCATION IS AN EMPTY SPOT OR A BLACK PIECE
@@ -152,21 +152,113 @@ void CheckBishop(int *numCheck, int currentRow, int currentColumn, char cBoard[8
 
 }
 
-void CheckKnight(int *numCheck, int currentRow, int currentColumn, char cBoard[8][8])
+int CheckKnight(int currentRow, int currentColumn, char cBoard[8][8])
 {
+    //Up-Left
+    if(cBoard[currentRow - 2][currentColumn - 1] == 'k' && (currentRow - 2) < 8 && (currentRow - 2) >= 0 && (currentColumn - 1) < 8 && (currentColumn - 1) >= 0)
+    {
+        return 1;
+    }
+
+    //Up-Right
+    if(cBoard[currentRow - 2][currentColumn + 1] == 'k' && (currentRow - 2) < 8 && (currentRow - 2) >= 0 && (currentColumn + 1) < 8 && (currentColumn + 1) >= 0)
+    {
+        return 1;
+    }
+
+    //Right-Up
+    if(cBoard[currentRow - 1][currentColumn + 2] == 'k' && (currentRow - 1) < 8 && (currentRow - 1) >= 0 && (currentColumn + 2) < 8 && (currentColumn + 2) >= 0)
+    {
+        return 1;
+    }
+
+    //Right-Down
+    if(cBoard[currentRow + 1][currentColumn + 2] == 'k' && (currentRow + 1) < 8 && (currentRow + 1) >= 0 && (currentColumn + 2) < 8 && (currentColumn + 2) >= 0)
+    {
+        return 1;
+    }
+
+    //Down-Right
+    if(cBoard[currentRow + 2][currentColumn + 1] == 'k' && (currentRow + 2) < 8 && (currentRow + 2) >= 0 && (currentColumn + 1) < 8 && (currentColumn + 1) >= 0)
+    {
+        return 1;
+    }
+
+    //Down-Left
+    if(cBoard[currentRow + 2][currentColumn - 1] == 'k' && (currentRow + 2) < 8 && (currentRow + 2) >= 0 && (currentColumn - 1) < 8 && (currentColumn - 1) >= 0)
+    {
+        return 1;
+    }
+
+    //Left-Down
+    if(cBoard[currentRow + 1][currentColumn - 2] == 'k' && (currentRow + 1) < 8 && (currentRow + 1) >= 0 && (currentColumn - 2) < 8 && (currentColumn - 2) >= 0)
+    {
+        return 1;
+    }
+
+    //Left-Up
+    if(cBoard[currentRow - 1][currentColumn - 2] == 'k' && (currentRow - 1) < 8 && (currentRow - 1) >= 0 && (currentColumn - 2) < 8 && (currentColumn - 2) >= 0)
+    {
+        return 1;
+    }
+
+    return 0;
+}
+
+int CheckKing(int currentRow, int currentColumn, char cBoard[8][8])
+{
+    //NW
+    if(cBoard[currentRow - 1][currentColumn - 1] == 'k' && (currentRow - 1) < 8 && (currentRow - 1) >= 0 && (currentColumn - 1) < 8 && (currentColumn - 1) >= 0)
+    {
+        return 1;
+    }
+
+    //N
+    if(cBoard[currentRow - 1][currentColumn] == 'k' && (currentRow - 1) < 8 && (currentRow - 1) >= 0 && (currentColumn) < 8 && (currentColumn) >= 0)
+    {
+        return 1;
+    }
+
+    //NE
+    if(cBoard[currentRow - 1][currentColumn + 1] == 'k' && (currentRow - 1) < 8 && (currentRow - 1) >= 0 && (currentColumn + 1) < 8 && (currentColumn + 1) >= 0)
+    {
+        return 1;
+    }
+
+    //E
+    if(cBoard[currentRow][currentColumn + 1] == 'k' && (currentRow) < 8 && (currentRow) >= 0 && (currentColumn + 1) < 8 && (currentColumn + 1) >= 0)
+    {
+        return 1;
+    }
+
+    //SE
+    if(cBoard[currentRow + 1][currentColumn + 1] == 'k' && (currentRow + 1) < 8 && (currentRow + 1) >= 0 && (currentColumn + 1) < 8 && (currentColumn + 1) >= 0)
+    {
+        return 1;
+    }
+
+    //S
+    if(cBoard[currentRow + 1][currentColumn] == 'k' && (currentRow + 1) < 8 && (currentRow + 1) >= 0 && (currentColumn) < 8 && (currentColumn) >= 0)
+    {
+        return 1;
+    }
+
+    //SW
+    if(cBoard[currentRow + 1][currentColumn - 1] == 'k' && (currentRow + 1) < 8 && (currentRow + 1) >= 0 && (currentColumn - 1) < 8 && (currentColumn - 1) >= 0)
+    {
+        return 1;
+    }
+
+    //W
+    if(cBoard[currentRow][currentColumn - 1] == 'k' && (currentRow) < 8 && (currentRow) >= 0 && (currentColumn - 1) < 8 && (currentColumn - 1) >= 0)
+    {
+        return 1;
+    }
+
+    return 0;
 
 }
 
-void CheckKing(int *numCheck, int currentRow, int currentColumn, char cBoard[8][8])
-{
-
-}
 
 
-void foo(int *x )
-{
-    // x is still a *copy* of foo()'s argument, but that copy *refers* to
-    // the value as seen by the caller
-    *x = 42;
-}
 
