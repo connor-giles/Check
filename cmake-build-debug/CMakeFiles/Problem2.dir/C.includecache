@@ -9,4 +9,6 @@
 C:/Users/Connor Giles/Dropbox/COP3275/PA3/Problem2/p2.c
 stdio.h
 -
+stdbool.h
+-
 
