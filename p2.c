@@ -7,7 +7,7 @@ void PrintChessboard(char[8][8]);
 void FindKing(int*, int*, char[8][8]);
 int CheckRook(int, int, int, int, char[8][8]);
 int CheckKnight(int, int, char[8][8]);
-int CheckQueen(int, int, char[8][8]);
+int CheckQueen(int, int, int, int, char[8][8]);
 int CheckKing(int, int, char[8][8]);
 int CheckBishop(int, int, int, int, char[8][8]);
 int CheckPawn(int, int, char[8][8]);
@@ -61,7 +61,7 @@ int main()
             //CHECKS IF THE PIECE AT THIS LOCATION IS A WHITE QUEEN
             else if(chessBoard[i][j] == 'Q')
             {
-                numberOfChecks += CheckQueen(i,j,chessBoard);
+                numberOfChecks += CheckQueen(i,j,kingRow,kingCol,chessBoard);
             }
 
             //CHECKS IF THE PIECE AT THIS LOCATION IS A WHITE ROOK
@@ -99,14 +99,7 @@ int main()
 
     //Prints the number of white pieces that have the black king in check
     printf("%d\n", numberOfChecks);
-
-
-
-
-
-
-
-
+    
     return 0;
 }
 
@@ -253,9 +246,12 @@ int CheckPawn(int currentRow, int currentColumn, char cBoard[8][8])
 
 }
 
-int CheckQueen(int currentRow, int currentColumn, char cBoard[8][8])
+int CheckQueen(int cRow, int cColumn, int kRow, int kCol, char cBoard[8][8])
 {
-
+    int checks = 0;
+    checks += CheckBishop(cRow,cColumn,kRow,kCol,cBoard);
+    checks += CheckRook(cRow,cColumn,kRow,kCol,cBoard);
+    return checks;
 }
 
 int CheckBishop(int currentRow, int currentColumn, int kRow, int kCol, char cBoard[8][8])
@@ -264,19 +260,34 @@ int CheckBishop(int currentRow, int currentColumn, int kRow, int kCol, char cBoa
     int cumCol; //cumulative row
     int sumRowCol = -1; //checks if king and bishop are in same diagonal
 
-
-    if((kCol > currentColumn && kRow > currentRow) || (kCol < currentColumn && kRow < currentRow))
+    if(kRow < currentRow && kCol < currentColumn) //king is upper left of bishop
     {
-        cumRow = currentRow + kRow;
-        cumCol = currentColumn + kCol;
+        cumRow = currentRow - kRow;
+        cumCol = currentColumn - kCol;
         sumRowCol = cumRow - cumCol;
     }
-    else if((kCol > currentColumn && kRow < currentRow) || (kCol < currentColumn && kRow > currentRow))
+
+    else if(kRow > currentRow && kCol < currentColumn) //king is lower left of bishop
     {
         cumRow = currentRow - kRow;
         cumCol = currentColumn - kCol;
         sumRowCol = cumRow + cumCol;
     }
+
+    else if(kRow < currentRow && kCol > currentColumn) //king is upper right of bishop
+    {
+        cumRow = currentRow - kRow;
+        cumCol = currentColumn - kCol;
+        sumRowCol = cumRow + cumCol;
+    }
+
+    else if(kRow > currentRow && kCol > currentColumn) //king is lower right of bishop
+    {
+        cumRow = currentRow - kRow;
+        cumCol = currentColumn - kCol;
+        sumRowCol = cumRow - cumCol;
+    }
+
 
     if(sumRowCol != 0)
         return 0;
