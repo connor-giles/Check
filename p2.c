@@ -260,6 +260,129 @@ int CheckQueen(int currentRow, int currentColumn, char cBoard[8][8])
 
 int CheckBishop(int currentRow, int currentColumn, int kRow, int kCol, char cBoard[8][8])
 {
+    int cumRow; //cumulative row
+    int cumCol; //cumulative row
+    int sumRowCol = -1; //checks if king and bishop are in same diagonal
+
+
+    if((kCol > currentColumn && kRow > currentRow) || (kCol < currentColumn && kRow < currentRow))
+    {
+        cumRow = currentRow + kRow;
+        cumCol = currentColumn + kCol;
+        sumRowCol = cumRow - cumCol;
+    }
+    else if((kCol > currentColumn && kRow < currentRow) || (kCol < currentColumn && kRow > currentRow))
+    {
+        cumRow = currentRow - kRow;
+        cumCol = currentColumn - kCol;
+        sumRowCol = cumRow + cumCol;
+    }
+
+    if(sumRowCol != 0)
+        return 0;
+
+    else if(kCol > currentColumn)
+    {
+        if(kRow < currentRow)
+        {
+            //progress upper right of 'x'
+            while(currentColumn < 8 && currentRow >= 0)
+            {
+                if(cBoard[currentRow - 1][currentColumn + 1] == 'k') //implies black king is found
+                    return 1;
+
+                    //implies there is a black piece in the way
+                else if(cBoard[currentRow - 1][currentColumn + 1] > 'a' && cBoard[currentRow][currentColumn + 1] < 'z')
+                    return 0;
+
+                    //implies there is a white piece in the way
+                else if(cBoard[currentRow - 1][currentColumn + 1] > 'A' && cBoard[currentRow][currentColumn + 1] < 'Z')
+                    return 0;
+
+                else
+                {
+                    currentColumn++;
+                    currentRow--;
+                }
+            }
+
+
+        }
+        else //implies king's row is greater than bishop's row
+        {
+            //progress lower right of 'x'
+            while(currentColumn < 8 && currentRow < 8)
+            {
+                if(cBoard[currentRow + 1][currentColumn + 1] == 'k') //implies black king is found
+                    return 1;
+
+                    //implies there is a black piece in the way
+                else if(cBoard[currentRow + 1][currentColumn + 1] > 'a' && cBoard[currentRow][currentColumn + 1] < 'z')
+                    return 0;
+
+                    //implies there is a white piece in the way
+                else if(cBoard[currentRow + 1][currentColumn + 1] > 'A' && cBoard[currentRow][currentColumn + 1] < 'Z')
+                    return 0;
+
+                else
+                {
+                    currentColumn++;
+                    currentRow++;
+                }
+            }
+        }
+    }
+
+    else if(kCol < currentColumn)
+    {
+        if(kRow < currentRow)
+        {
+            //progress upper left of 'x'
+            while(currentColumn >= 0 && currentRow >= 0)
+            {
+                if (cBoard[currentRow - 1][currentColumn - 1] == 'k') //implies black king is found
+                    return 1;
+
+                    //implies there is a black piece in the way
+                else if (cBoard[currentRow - 1][currentColumn - 1] > 'a' && cBoard[currentRow][currentColumn + 1] < 'z')
+                    return 0;
+
+                    //implies there is a white piece in the way
+                else if (cBoard[currentRow - 1][currentColumn - 1] > 'A' && cBoard[currentRow][currentColumn + 1] < 'Z')
+                    return 0;
+
+                else
+                {
+                    currentColumn--;
+                    currentRow--;
+                }
+            }
+        }
+        else //implies king's row is greater than bishop's row
+        {
+            //progress lower left of 'x'
+            while(currentColumn >= 0 && currentRow >= 0)
+            {
+                if (cBoard[currentRow + 1][currentColumn - 1] == 'k') //implies black king is found
+                    return 1;
+
+                    //implies there is a black piece in the way
+                else if (cBoard[currentRow + 1][currentColumn - 1] > 'a' && cBoard[currentRow][currentColumn + 1] < 'z')
+                    return 0;
+
+                    //implies there is a white piece in the way
+                else if (cBoard[currentRow + 1][currentColumn - 1] > 'A' && cBoard[currentRow][currentColumn + 1] < 'Z')
+                    return 0;
+
+                else
+                {
+                    currentColumn--;
+                    currentRow++;
+                }
+            }
+        }
+    }
+
 
 }
 
