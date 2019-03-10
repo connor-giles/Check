@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <stdbool.h>
-
 
 //FUNCTION PROTOTYPES
 void PrintChessboard(char[8][8]);
@@ -99,7 +97,7 @@ int main()
 
     //Prints the number of white pieces that have the black king in check
     printf("%d\n", numberOfChecks);
-    
+
     return 0;
 }
 
